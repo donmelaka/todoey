@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/model/task.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/model/task_list.dart';
+
 
 class TaskTile extends StatelessWidget {
   final Task task;
-  final Function checkBoxFunction;
 
-  const TaskTile(
-      {required this.task,
-      required this.checkBoxFunction});
+  TaskTile({required this.task});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onLongPress: (){
+        Provider.of<Tasks>(context, listen: false).deleteTask(task.id);
+      },
       title: Text(
         task.taskName,
         style: task.isDone
@@ -28,7 +31,8 @@ class TaskTile extends StatelessWidget {
       trailing: Checkbox(
           value: task.isDone,
           onChanged: (val) {
-            checkBoxFunction(task.id);
+            // context.watch<Tasks>().toggleTaskState(task.id);
+            Provider.of<Tasks>(context, listen: false).toggleTaskState(task.id);
           }),
     );
   }
