@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:todoey_flutter/model/task.dart';
 
 class TaskTile extends StatelessWidget {
-  final String taskName;
-  final bool isChecked;
+  final Task task;
   final Function checkBoxFunction;
 
   const TaskTile(
-      {required this.taskName,
-      required this.isChecked,
+      {required this.task,
       required this.checkBoxFunction});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        taskName,
-        style: isChecked
+        task.taskName,
+        style: task.isDone
             ? TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
@@ -27,9 +26,9 @@ class TaskTile extends StatelessWidget {
               ),
       ),
       trailing: Checkbox(
-          value: isChecked,
+          value: task.isDone,
           onChanged: (val) {
-            checkBoxFunction();
+            checkBoxFunction(task.id);
           }),
     );
   }

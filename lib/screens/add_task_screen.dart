@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:todoey_flutter/model/task.dart';
+import 'package:uuid/uuid.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({Key? key}) : super(key: key);
+  AddTaskScreen({required this.addTask});
+
+  final Function addTask;
+
+  final TextEditingController _textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +39,22 @@ class AddTaskScreen extends StatelessWidget {
               ),
               TextField(
                 decoration: InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 4,
-                      color: Colors.lightBlueAccent,
-                    )
-                  )
-                ),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                  width: 4,
+                  color: Colors.lightBlueAccent,
+                ))),
+                controller: _textEditingController,
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  addTask(
+                      Task(id: Uuid(), taskName: _textEditingController.text));
+                  Navigator.pop(context);
+                },
                 child: Container(
                   alignment: Alignment.center,
                   child: Text(
